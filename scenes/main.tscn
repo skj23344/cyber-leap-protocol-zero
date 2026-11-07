@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://main001"]
+
+[ext_resource type="PackedScene" path="res://scenes/sound_manager.tscn" id="1_sound"]
+[ext_resource type="PackedScene" path="res://scenes/stage1.tscn" id="2_stage1"]
+
+[node name="Main" type="Node"]
+
+[node name="SoundManager" parent="." instance=ExtResource("1_sound")]
+
+[node name="CurrentStage" parent="." instance=ExtResource("2_stage1")]

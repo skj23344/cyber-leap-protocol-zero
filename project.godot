@@ -1,0 +1,53 @@
+; Engine configuration file.
+; Cyber Leap: Protocol Zero - Dark Neon Action Platformer
+
+config_version=5
+
+[application]
+
+config/name="Cyber Leap: Protocol Zero"
+config/description="Dark Neon Synthwave Action Platformer with Celeste/Dead Cells Mechanics"
+run/main_scene="res://scenes/main.tscn"
+config/features=PackedStringArray("4.3", "Forward Plus")
+config/icon="res://icon.svg"
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+window/vsync/vsync_mode=1
+
+[rendering]
+
+renderer/rendering_method="forward_plus"
+textures/canvas_textures/default_texture_filter=0
+environment/defaults/default_clear_color=Color(0.04, 0.03, 0.08, 1)
+
+[input]
+
+move_left={
+"deadzone": 0.5,
+"events": []
+}
+move_right={
+"deadzone": 0.5,
+"events": []
+}
+jump={
+"deadzone": 0.5,
+"events": []
+}
+dash={
+"deadzone": 0.5,
+"events": []
+}
+restart={
+"deadzone": 0.5,
+"events": []
+}
+pause={
+"deadzone": 0.5,
+"events": []
+}

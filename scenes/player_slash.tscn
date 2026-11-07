@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3 uid="uid://playerslash01"]
+
+[ext_resource type="Script" path="res://scripts/player_slash.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/textures/slash_fx.png" id="2_tex"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_slash"]
+radius = 32.0
+
+[sub_resource type="Curve" id="Curve_hit"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="PlayerSlash" type="Area2D"]
+collision_layer = 16
+collision_mask = 5
+script = ExtResource("1_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(16, 0)
+texture = ExtResource("2_tex")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(20, 0)
+shape = SubResource("CircleShape2D_slash")
+
+[node name="HitParticles" type="CPUParticles2D" parent="."]
+position = Vector2(28, 0)
+emitting = false
+amount = 16
+lifetime = 0.25
+one_shot = true
+explosiveness = 1.0
+emission_shape = 1
+emission_sphere_radius = 10.0
+spread = 60.0
+gravity = Vector2(0, 50)
+initial_velocity_min = 80.0
+initial_velocity_max = 160.0
+scale_amount_min = 2.0
+scale_amount_max = 4.0
+scale_amount_curve = SubResource("Curve_hit")
+color = Color(0, 0.94, 1, 1)

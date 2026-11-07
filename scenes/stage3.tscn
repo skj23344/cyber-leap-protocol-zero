@@ -1,0 +1,172 @@
+[gd_scene load_steps=13 format=3 uid="uid://stage03"]
+
+[ext_resource type="Script" path="res://scripts/level_manager.gd" id="1_lm"]
+[ext_resource type="Texture2D" path="res://assets/textures/cyber_bg.png" id="2_bg_tex"]
+[ext_resource type="PackedScene" path="res://scenes/player.tscn" id="3_player"]
+[ext_resource type="PackedScene" path="res://scenes/hud.tscn" id="4_hud"]
+[ext_resource type="PackedScene" path="res://scenes/boss_overlord.tscn" id="5_boss"]
+[ext_resource type="PackedScene" path="res://scenes/jump_pad.tscn" id="6_pad"]
+[ext_resource type="PackedScene" path="res://scenes/weapon_pickup.tscn" id="7_weapon"]
+
+[sub_resource type="Environment" id="Environment_stage"]
+background_mode = 3
+glow_enabled = true
+glow_intensity = 1.0
+glow_bloom = 0.35
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_platform_1280_60"]
+size = Vector2(1280, 60)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_platform_220_30"]
+size = Vector2(220, 30)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_platform_300_30"]
+size = Vector2(300, 30)
+
+[node name="Stage3" type="Node2D"]
+script = ExtResource("1_lm")
+current_stage_num = 3
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_stage")
+
+[node name="ParallaxBackground" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="BgSprite" type="Sprite2D" parent="ParallaxBackground"]
+position = Vector2(640, 360)
+texture = ExtResource("2_bg_tex")
+
+[node name="HUD" parent="." instance=ExtResource("4_hud")]
+
+[node name="Platforms" type="Node2D" parent="."]
+
+[node name="ArenaFloor" type="StaticBody2D" parent="Platforms"]
+position = Vector2(0, 660)
+collision_layer = 1
+collision_mask = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/ArenaFloor"]
+position = Vector2(640.0, 30.0)
+shape = SubResource("RectangleShape2D_platform_1280_60")
+
+[node name="BgRect" type="ColorRect" parent="Platforms/ArenaFloor"]
+offset_right = 1280.0
+offset_bottom = 60.0
+color = Color(0.06, 0.05, 0.14, 1)
+
+[node name="TopBorder" type="ColorRect" parent="Platforms/ArenaFloor"]
+offset_right = 1280.0
+offset_bottom = 3.0
+color = Color(1, 0, 0.33, 1)
+
+[node name="Line" type="ColorRect" parent="Platforms/ArenaFloor"]
+offset_left = 192.0.0
+offset_top = 10.0
+offset_right = 1088.0.0
+offset_bottom = 12.0
+color = Color(0, 0.5, 0.8, 0.4)
+
+[node name="PlatformLeft" type="StaticBody2D" parent="Platforms"]
+position = Vector2(100, 460)
+collision_layer = 1
+collision_mask = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/PlatformLeft"]
+position = Vector2(110.0, 15.0)
+shape = SubResource("RectangleShape2D_platform_220_30")
+
+[node name="BgRect" type="ColorRect" parent="Platforms/PlatformLeft"]
+offset_right = 220.0
+offset_bottom = 30.0
+color = Color(0.06, 0.05, 0.14, 1)
+
+[node name="TopBorder" type="ColorRect" parent="Platforms/PlatformLeft"]
+offset_right = 220.0
+offset_bottom = 3.0
+color = Color(0, 0.94, 1, 1)
+
+[node name="Line" type="ColorRect" parent="Platforms/PlatformLeft"]
+offset_left = 33.0.0
+offset_top = 10.0
+offset_right = 187.0.0
+offset_bottom = 12.0
+color = Color(0, 0.5, 0.8, 0.4)
+
+[node name="PlatformRight" type="StaticBody2D" parent="Platforms"]
+position = Vector2(960, 460)
+collision_layer = 1
+collision_mask = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/PlatformRight"]
+position = Vector2(110.0, 15.0)
+shape = SubResource("RectangleShape2D_platform_220_30")
+
+[node name="BgRect" type="ColorRect" parent="Platforms/PlatformRight"]
+offset_right = 220.0
+offset_bottom = 30.0
+color = Color(0.06, 0.05, 0.14, 1)
+
+[node name="TopBorder" type="ColorRect" parent="Platforms/PlatformRight"]
+offset_right = 220.0
+offset_bottom = 3.0
+color = Color(0, 0.94, 1, 1)
+
+[node name="Line" type="ColorRect" parent="Platforms/PlatformRight"]
+offset_left = 33.0.0
+offset_top = 10.0
+offset_right = 187.0.0
+offset_bottom = 12.0
+color = Color(0, 0.5, 0.8, 0.4)
+
+[node name="PlatformCenter" type="StaticBody2D" parent="Platforms"]
+position = Vector2(490, 320)
+collision_layer = 1
+collision_mask = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/PlatformCenter"]
+position = Vector2(150.0, 15.0)
+shape = SubResource("RectangleShape2D_platform_300_30")
+
+[node name="BgRect" type="ColorRect" parent="Platforms/PlatformCenter"]
+offset_right = 300.0
+offset_bottom = 30.0
+color = Color(0.06, 0.05, 0.14, 1)
+
+[node name="TopBorder" type="ColorRect" parent="Platforms/PlatformCenter"]
+offset_right = 300.0
+offset_bottom = 3.0
+color = Color(0.69, 0.15, 1, 1)
+
+[node name="Line" type="ColorRect" parent="Platforms/PlatformCenter"]
+offset_left = 45.0.0
+offset_top = 10.0
+offset_right = 255.0.0
+offset_bottom = 12.0
+color = Color(0, 0.5, 0.8, 0.4)
+
+[node name="Player" parent="." instance=ExtResource("3_player")]
+position = Vector2(200, 600)
+
+[node name="BossOverlord" parent="." instance=ExtResource("5_boss")]
+position = Vector2(640, 200)
+
+[node name="Weapons" type="Node2D" parent="."]
+
+[node name="BladePickup" parent="Weapons" instance=ExtResource("7_weapon")]
+position = Vector2(210, 420)
+weapon_type = "blade"
+
+[node name="BlasterPickup" parent="Weapons" instance=ExtResource("7_weapon")]
+position = Vector2(1070, 420)
+weapon_type = "blaster"
+
+[node name="JumpPads" type="Node2D" parent="."]
+
+[node name="PadLeft" parent="JumpPads" instance=ExtResource("6_pad")]
+position = Vector2(60, 644)
+launch_force = -780.0
+
+[node name="PadRight" parent="JumpPads" instance=ExtResource("6_pad")]
+position = Vector2(1220, 644)
+launch_force = -780.0

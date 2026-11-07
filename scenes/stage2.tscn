@@ -1,0 +1,351 @@
+[gd_scene load_steps=20 format=3 uid="uid://stage02"]
+
+[ext_resource type="Script" path="res://scripts/level_manager.gd" id="1_lm"]
+[ext_resource type="Texture2D" path="res://assets/textures/tile_spikes.png" id="2_spike_tex"]
+[ext_resource type="Texture2D" path="res://assets/textures/cyber_bg.png" id="3_bg_tex"]
+[ext_resource type="PackedScene" path="res://scenes/player.tscn" id="4_player"]
+[ext_resource type="PackedScene" path="res://scenes/hud.tscn" id="5_hud"]
+[ext_resource type="PackedScene" path="res://scenes/collectible_core.tscn" id="6_core"]
+[ext_resource type="PackedScene" path="res://scenes/portal.tscn" id="7_portal"]
+[ext_resource type="PackedScene" path="res://scenes/enemy_drone.tscn" id="8_drone"]
+[ext_resource type="PackedScene" path="res://scenes/enemy_turret.tscn" id="9_turret"]
+[ext_resource type="PackedScene" path="res://scenes/laser_hazard.tscn" id="10_laser"]
+[ext_resource type="PackedScene" path="res://scenes/jump_pad.tscn" id="11_pad"]
+[ext_resource type="PackedScene" path="res://scenes/weapon_pickup.tscn" id="12_weapon"]
+
+[sub_resource type="Environment" id="Environment_stage"]
+background_mode = 3
+glow_enabled = true
+glow_intensity = 0.85
+glow_bloom = 0.3
+
+[sub_resource type="GDScript" id="GDScript_spike"]
+script/source = "extends Area2D
+func _ready():
+	body_entered.connect(_on_body_entered)
+func _on_body_entered(body):
+	if body.is_in_group(\"player\") and body.has_method(\"take_damage\"):
+		body.take_damage(1)
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_platform_260_40"]
+size = Vector2(260, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_platform_220_40"]
+size = Vector2(220, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_platform_160_30"]
+size = Vector2(160, 30)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_platform_180_30"]
+size = Vector2(180, 30)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_platform_420_50"]
+size = Vector2(420, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_spike_256"]
+size = Vector2(256, 48)
+
+[node name="Stage2" type="Node2D"]
+script = ExtResource("1_lm")
+current_stage_num = 2
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_stage")
+
+[node name="ParallaxBackground" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="BgSprite" type="Sprite2D" parent="ParallaxBackground"]
+position = Vector2(640, 360)
+texture = ExtResource("3_bg_tex")
+
+[node name="HUD" parent="." instance=ExtResource("5_hud")]
+
+[node name="Platforms" type="Node2D" parent="."]
+
+[node name="StartPlatform" type="StaticBody2D" parent="Platforms"]
+position = Vector2(40, 560)
+collision_layer = 1
+collision_mask = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StartPlatform"]
+position = Vector2(130.0, 20.0)
+shape = SubResource("RectangleShape2D_platform_260_40")
+
+[node name="BgRect" type="ColorRect" parent="Platforms/StartPlatform"]
+offset_right = 260.0
+offset_bottom = 40.0
+color = Color(0.06, 0.05, 0.14, 1)
+
+[node name="TopBorder" type="ColorRect" parent="Platforms/StartPlatform"]
+offset_right = 260.0
+offset_bottom = 3.0
+color = Color(0, 0.94, 1, 1)
+
+[node name="Line" type="ColorRect" parent="Platforms/StartPlatform"]
+offset_left = 39.0.0
+offset_top = 10.0
+offset_right = 221.0.0
+offset_bottom = 12.0
+color = Color(0, 0.5, 0.8, 0.4)
+
+[node name="Platform2" type="StaticBody2D" parent="Platforms"]
+position = Vector2(420, 500)
+collision_layer = 1
+collision_mask = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Platform2"]
+position = Vector2(110.0, 20.0)
+shape = SubResource("RectangleShape2D_platform_220_40")
+
+[node name="BgRect" type="ColorRect" parent="Platforms/Platform2"]
+offset_right = 220.0
+offset_bottom = 40.0
+color = Color(0.06, 0.05, 0.14, 1)
+
+[node name="TopBorder" type="ColorRect" parent="Platforms/Platform2"]
+offset_right = 220.0
+offset_bottom = 3.0
+color = Color(0, 0.94, 1, 1)
+
+[node name="Line" type="ColorRect" parent="Platforms/Platform2"]
+offset_left = 33.0.0
+offset_top = 10.0
+offset_right = 187.0.0
+offset_bottom = 12.0
+color = Color(0, 0.5, 0.8, 0.4)
+
+[node name="Platform3" type="StaticBody2D" parent="Platforms"]
+position = Vector2(780, 440)
+collision_layer = 1
+collision_mask = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Platform3"]
+position = Vector2(80.0, 15.0)
+shape = SubResource("RectangleShape2D_platform_160_30")
+
+[node name="BgRect" type="ColorRect" parent="Platforms/Platform3"]
+offset_right = 160.0
+offset_bottom = 30.0
+color = Color(0.06, 0.05, 0.14, 1)
+
+[node name="TopBorder" type="ColorRect" parent="Platforms/Platform3"]
+offset_right = 160.0
+offset_bottom = 3.0
+color = Color(0, 0.94, 1, 1)
+
+[node name="Line" type="ColorRect" parent="Platforms/Platform3"]
+offset_left = 24.0.0
+offset_top = 10.0
+offset_right = 136.0.0
+offset_bottom = 12.0
+color = Color(0, 0.5, 0.8, 0.4)
+
+[node name="Platform4" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1020, 360)
+collision_layer = 1
+collision_mask = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Platform4"]
+position = Vector2(80.0, 15.0)
+shape = SubResource("RectangleShape2D_platform_160_30")
+
+[node name="BgRect" type="ColorRect" parent="Platforms/Platform4"]
+offset_right = 160.0
+offset_bottom = 30.0
+color = Color(0.06, 0.05, 0.14, 1)
+
+[node name="TopBorder" type="ColorRect" parent="Platforms/Platform4"]
+offset_right = 160.0
+offset_bottom = 3.0
+color = Color(0, 0.94, 1, 1)
+
+[node name="Line" type="ColorRect" parent="Platforms/Platform4"]
+offset_left = 24.0.0
+offset_top = 10.0
+offset_right = 136.0.0
+offset_bottom = 12.0
+color = Color(0, 0.5, 0.8, 0.4)
+
+[node name="Platform5" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1260, 280)
+collision_layer = 1
+collision_mask = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Platform5"]
+position = Vector2(80.0, 15.0)
+shape = SubResource("RectangleShape2D_platform_160_30")
+
+[node name="BgRect" type="ColorRect" parent="Platforms/Platform5"]
+offset_right = 160.0
+offset_bottom = 30.0
+color = Color(0.06, 0.05, 0.14, 1)
+
+[node name="TopBorder" type="ColorRect" parent="Platforms/Platform5"]
+offset_right = 160.0
+offset_bottom = 3.0
+color = Color(0, 0.94, 1, 1)
+
+[node name="Line" type="ColorRect" parent="Platforms/Platform5"]
+offset_left = 24.0.0
+offset_top = 10.0
+offset_right = 136.0.0
+offset_bottom = 12.0
+color = Color(0, 0.5, 0.8, 0.4)
+
+[node name="Platform6" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1540, 400)
+collision_layer = 1
+collision_mask = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Platform6"]
+position = Vector2(90.0, 15.0)
+shape = SubResource("RectangleShape2D_platform_180_30")
+
+[node name="BgRect" type="ColorRect" parent="Platforms/Platform6"]
+offset_right = 180.0
+offset_bottom = 30.0
+color = Color(0.06, 0.05, 0.14, 1)
+
+[node name="TopBorder" type="ColorRect" parent="Platforms/Platform6"]
+offset_right = 180.0
+offset_bottom = 3.0
+color = Color(0, 0.94, 1, 1)
+
+[node name="Line" type="ColorRect" parent="Platforms/Platform6"]
+offset_left = 27.0.0
+offset_top = 10.0
+offset_right = 153.0.0
+offset_bottom = 12.0
+color = Color(0, 0.5, 0.8, 0.4)
+
+[node name="EndPlatform" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1840, 520)
+collision_layer = 1
+collision_mask = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/EndPlatform"]
+position = Vector2(210.0, 25.0)
+shape = SubResource("RectangleShape2D_platform_420_50")
+
+[node name="BgRect" type="ColorRect" parent="Platforms/EndPlatform"]
+offset_right = 420.0
+offset_bottom = 50.0
+color = Color(0.06, 0.05, 0.14, 1)
+
+[node name="TopBorder" type="ColorRect" parent="Platforms/EndPlatform"]
+offset_right = 420.0
+offset_bottom = 3.0
+color = Color(0, 0.94, 1, 1)
+
+[node name="Line" type="ColorRect" parent="Platforms/EndPlatform"]
+offset_left = 63.0.0
+offset_top = 10.0
+offset_right = 357.0.0
+offset_bottom = 12.0
+color = Color(0, 0.5, 0.8, 0.4)
+
+[node name="Hazards" type="Node2D" parent="."]
+
+[node name="Spikes1" type="Area2D" parent="Hazards"]
+position = Vector2(280, 620)
+collision_layer = 4
+collision_mask = 2
+script = SubResource("GDScript_spike")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hazards/Spikes1"]
+position = Vector2(128.0, 24)
+shape = SubResource("RectangleShape2D_spike_256")
+
+[node name="Spike_0" type="Sprite2D" parent="Hazards/Spikes1"]
+position = Vector2(32, 32)
+texture = ExtResource("2_spike_tex")
+
+[node name="Spike_1" type="Sprite2D" parent="Hazards/Spikes1"]
+position = Vector2(96, 32)
+texture = ExtResource("2_spike_tex")
+
+[node name="Spike_2" type="Sprite2D" parent="Hazards/Spikes1"]
+position = Vector2(160, 32)
+texture = ExtResource("2_spike_tex")
+
+[node name="Spike_3" type="Sprite2D" parent="Hazards/Spikes1"]
+position = Vector2(224, 32)
+texture = ExtResource("2_spike_tex")
+
+[node name="Spikes2" type="Area2D" parent="Hazards"]
+position = Vector2(1400, 620)
+collision_layer = 4
+collision_mask = 2
+script = SubResource("GDScript_spike")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hazards/Spikes2"]
+position = Vector2(128.0, 24)
+shape = SubResource("RectangleShape2D_spike_256")
+
+[node name="Spike_0" type="Sprite2D" parent="Hazards/Spikes2"]
+position = Vector2(32, 32)
+texture = ExtResource("2_spike_tex")
+
+[node name="Spike_1" type="Sprite2D" parent="Hazards/Spikes2"]
+position = Vector2(96, 32)
+texture = ExtResource("2_spike_tex")
+
+[node name="Spike_2" type="Sprite2D" parent="Hazards/Spikes2"]
+position = Vector2(160, 32)
+texture = ExtResource("2_spike_tex")
+
+[node name="Spike_3" type="Sprite2D" parent="Hazards/Spikes2"]
+position = Vector2(224, 32)
+texture = ExtResource("2_spike_tex")
+
+[node name="LaserHazard1" parent="Hazards" instance=ExtResource("10_laser")]
+position = Vector2(350, 440)
+
+[node name="LaserHazard2" parent="Hazards" instance=ExtResource("10_laser")]
+position = Vector2(1180, 240)
+
+[node name="Player" parent="." instance=ExtResource("4_player")]
+position = Vector2(100, 520)
+
+[node name="Weapons" type="Node2D" parent="."]
+
+[node name="BlasterPickup" parent="Weapons" instance=ExtResource("12_weapon")]
+position = Vector2(220, 520)
+weapon_type = "blaster"
+
+[node name="Cores" type="Node2D" parent="."]
+
+[node name="Core1" parent="Cores" instance=ExtResource("6_core")]
+position = Vector2(530, 440)
+
+[node name="Core2" parent="Cores" instance=ExtResource("6_core")]
+position = Vector2(1100, 300)
+
+[node name="Core3" parent="Cores" instance=ExtResource("6_core")]
+position = Vector2(1630, 340)
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="Turret1" parent="Enemies" instance=ExtResource("9_turret")]
+position = Vector2(530, 240)
+
+[node name="Turret2" parent="Enemies" instance=ExtResource("9_turret")]
+position = Vector2(1340, 120)
+
+[node name="Drone1" parent="Enemies" instance=ExtResource("8_drone")]
+position = Vector2(860, 390)
+speed = 80.0
+patrol_distance = 60.0
+
+[node name="JumpPads" type="Node2D" parent="."]
+
+[node name="JumpPad1" parent="JumpPads" instance=ExtResource("11_pad")]
+position = Vector2(900, 424)
+
+[node name="JumpPad2" parent="JumpPads" instance=ExtResource("11_pad")]
+position = Vector2(1680, 384)
+
+[node name="Portal" parent="." instance=ExtResource("7_portal")]
+position = Vector2(2160, 460)

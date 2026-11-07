@@ -1,0 +1,22 @@
+# Godot 4 4.x .gitignore file
+# Godot 4+ cache & imported assets
+.godot/
+*.translation
+
+# OS metadata
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Temporary files & logs
+*.tmp
+*.log
+/tmp/
+
+# Crash dumps
+crash_*
+mono_crash.*.json
+
+# Builds & exports (optional)
+build/
+bin/

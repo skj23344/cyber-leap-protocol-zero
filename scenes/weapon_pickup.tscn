@@ -1,0 +1,48 @@
+[gd_scene load_steps=5 format=3 uid="uid://weaponpickup01"]
+
+[ext_resource type="Script" path="res://scripts/weapon_pickup.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/textures/weapon_blade_pickup.png" id="2_tex"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wp"]
+radius = 24.0
+
+[sub_resource type="Curve" id="Curve_wp_burst"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="WeaponPickup" type="Area2D"]
+collision_layer = 8
+collision_mask = 2
+script = ExtResource("1_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_tex")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_wp")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -110.0
+offset_top = -42.0
+offset_right = 110.0
+offset_bottom = -22.0
+theme_override_font_sizes/font_size = 13
+text = "[ ⚔️ 赛博光刃 // 触碰拾取 ]"
+horizontal_alignment = 1
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 20
+lifetime = 0.4
+one_shot = true
+explosiveness = 1.0
+emission_shape = 1
+emission_sphere_radius = 16.0
+spread = 180.0
+gravity = Vector2(0, -60)
+initial_velocity_min = 60.0
+initial_velocity_max = 120.0
+scale_amount_min = 2.0
+scale_amount_max = 4.0
+scale_amount_curve = SubResource("Curve_wp_burst")
+color = Color(0, 0.94, 1, 1)

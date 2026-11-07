@@ -1,0 +1,47 @@
+[gd_scene load_steps=5 format=3 uid="uid://portal001"]
+
+[ext_resource type="Script" path="res://scripts/portal.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/textures/portal.png" id="2_tex"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_portal"]
+radius = 20.0
+height = 70.0
+
+[sub_resource type="Curve" id="Curve_portal"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="Portal" type="Area2D"]
+collision_layer = 8
+collision_mask = 2
+script = ExtResource("1_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_tex")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_portal")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 20
+lifetime = 0.8
+emission_shape = 2
+emission_sphere_radius = 24.0
+spread = 180.0
+gravity = Vector2(0, -60)
+initial_velocity_min = 10.0
+initial_velocity_max = 30.0
+scale_amount_min = 2.0
+scale_amount_max = 4.0
+scale_amount_curve = SubResource("Curve_portal")
+color = Color(0.69, 0.15, 1, 0.85)
+
+[node name="LockLabel" type="Label" parent="."]
+offset_left = -90.0
+offset_top = -68.0
+offset_right = 90.0
+offset_bottom = -45.0
+theme_override_font_sizes/font_size = 14
+text = "[ 锁定: 需3枚核心 ]"
+horizontal_alignment = 1

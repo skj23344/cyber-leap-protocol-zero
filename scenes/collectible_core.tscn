@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://core001"]
+
+[ext_resource type="Script" path="res://scripts/collectible_core.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/textures/core.png" id="2_tex"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_core"]
+radius = 18.0
+
+[sub_resource type="Curve" id="Curve_sparkle"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="CollectibleCore" type="Area2D"]
+collision_layer = 8
+collision_mask = 2
+script = ExtResource("1_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_tex")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_core")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 16
+lifetime = 0.45
+one_shot = true
+explosiveness = 0.9
+emission_shape = 1
+emission_sphere_radius = 8.0
+spread = 180.0
+gravity = Vector2(0, -50)
+initial_velocity_min = 40.0
+initial_velocity_max = 90.0
+scale_amount_min = 2.0
+scale_amount_max = 4.0
+scale_amount_curve = SubResource("Curve_sparkle")
+color = Color(1, 0.9, 0.1, 1)
